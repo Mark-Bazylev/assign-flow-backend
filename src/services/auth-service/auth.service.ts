@@ -1,11 +1,11 @@
-import { Prisma, PrismaClient } from "@prisma/client";
+import { PrismaClient, User} from "@prisma/client";
 import { comparePassword, hashPassword, signToken } from "../../utils/auth";
 import { BadRequestError,UnauthenticatedError } from "../../errors";
 
 const prisma = new PrismaClient();
 
 class AuthService {
-  public async register(registerParams: Prisma.UserCreateInput) {
+  public async register(registerParams: User) {
     const { email, password, name } = registerParams;
 
     if (password.length < 4) {
@@ -24,7 +24,7 @@ class AuthService {
     });
   }
 
-  public async login(loginParams: Prisma.UserCreateInput) {
+  public async login(loginParams: User) {
     const { email, password } = loginParams;
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {

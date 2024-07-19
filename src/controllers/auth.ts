@@ -1,10 +1,10 @@
 import { StatusCodes } from "http-status-codes";
-import {Prisma, PrismaClient} from "@prisma/client";
+import {PrismaClient, User} from "@prisma/client";
 import { Request, Response, NextFunction } from "express";
 import {authService} from "../services/auth-service/auth.service";
 
 interface UserRequest extends Request {
-  body: Prisma.UserCreateInput;
+  body: User;
 }
 
 const prisma = new PrismaClient();
