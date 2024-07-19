@@ -10,14 +10,19 @@ interface UserRequest extends Request {
 const prisma = new PrismaClient();
 export async function register(req: UserRequest, res: Response, next: NextFunction) {
   try {
-    const user = await authService.register(req.body);
-    console.log(req.body);
-    res.status(StatusCodes.OK).json({ msg: "Registered", user });
+    const token = await authService.register(req.body);
+    res.status(StatusCodes.OK).json( {token} );
   } catch (e) {
     next(e);
   }
 }
 
 export async function login(req: Request, res: Response, next: NextFunction) {
-  res.status(StatusCodes.OK).json({ msg: "Logged In" });
+  try{
+    const token = await authService.login(req.body);
+    res.status(StatusCodes.OK).json({token});
+  }
+  catch (e){
+    next(e);
+  }
 }
